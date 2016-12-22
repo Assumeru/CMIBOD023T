@@ -5,7 +5,7 @@ import hro.cmibod023t.cluster.Cluster;
 public interface Point {
 	double getDistance(Point p);
 
-	void setCluster(Cluster c);
+	void setCluster(Cluster<?> c);
 
-	Cluster getCluster();
+	Cluster<?> getCluster();
 }

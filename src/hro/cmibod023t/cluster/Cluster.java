@@ -8,9 +8,9 @@ import java.util.Iterator;
 
 import hro.cmibod023t.cluster.points.Point;
 
-public class Cluster extends AbstractCollection<Point> {
-	private final Collection<Point> points;
-	private final Collection<Point> immutable;
+public class Cluster<E extends Point> extends AbstractCollection<E> {
+	private final Collection<E> points;
+	private final Collection<E> immutable;
 
 	public Cluster() {
 		points = new ArrayList<>();
@@ -18,13 +18,13 @@ public class Cluster extends AbstractCollection<Point> {
 	}
 
 	@Override
-	public boolean add(Point e) {
+	public boolean add(E e) {
 		e.setCluster(this);
 		return points.add(e);
 	}
 
 	@Override
-	public Iterator<Point> iterator() {
+	public Iterator<E> iterator() {
 		return immutable.iterator();
 	}
 

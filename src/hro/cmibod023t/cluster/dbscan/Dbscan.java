@@ -34,8 +34,8 @@ public class Dbscan<E extends Point> {
 		this.points.addAll(points);
 	}
 
-	public Collection<Cluster> cluster() {
-		List<Cluster> clusters = new ArrayList<>();
+	public Collection<Cluster<E>> cluster() {
+		List<Cluster<E>> clusters = new ArrayList<>();
 		Set<E> visited = new HashSet<>();
 		for(E p : points) {
 			if(visited.contains(p)) {
@@ -50,8 +50,8 @@ public class Dbscan<E extends Point> {
 		return clusters;
 	}
 
-	private Cluster createCluster(Collection<E> neighbours, Set<E> visited) {
-		Cluster c = new Cluster();
+	private Cluster<E> createCluster(Collection<E> neighbours, Set<E> visited) {
+		Cluster<E> c = new Cluster<>();
 		List<E> points = new ArrayList<>(neighbours);
 		for(int i = 0; i < points.size(); i++) {
 			E p = points.get(i);

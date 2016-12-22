@@ -3,7 +3,7 @@ package hro.cmibod023t.cluster.points;
 import hro.cmibod023t.cluster.Cluster;
 
 public abstract class AbstractPoint<E extends Point> implements Point {
-	private Cluster cluster;
+	private Cluster<?> cluster;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -18,12 +18,12 @@ public abstract class AbstractPoint<E extends Point> implements Point {
 	protected abstract double getDistanceInternal(E p);
 
 	@Override
-	public void setCluster(Cluster c) {
+	public void setCluster(Cluster<?> c) {
 		cluster = c;
 	}
 
 	@Override
-	public Cluster getCluster() {
+	public Cluster<?> getCluster() {
 		return cluster;
 	}
 }
