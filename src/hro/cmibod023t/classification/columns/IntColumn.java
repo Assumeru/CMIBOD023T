@@ -1,12 +1,12 @@
-package hro.cmibod023t.bayes.columns;
+package hro.cmibod023t.classification.columns;
 
-import java.util.List;
+import java.util.Collection;
 
-import hro.cmibod023t.bayes.continuous.Range;
+import hro.cmibod023t.classification.continuous.Range;
 
 public class IntColumn extends AbstractColumn<Range<Integer>> {
-	public IntColumn() {
-		super(Range.class);
+	public IntColumn(int index) {
+		super(Range.class, index);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class IntColumn extends AbstractColumn<Range<Integer>> {
 	}
 
 	@Override
-	public List<Integer> getRowsMatching(Object feature) {
+	public Collection<Integer> getRowsMatching(Object feature) {
 		if(!(feature instanceof Integer)) {
 			checkType(feature);
 		}
@@ -34,7 +34,7 @@ public class IntColumn extends AbstractColumn<Range<Integer>> {
 	}
 
 	@Override
-	protected boolean matches(Object feature, Range<Integer> row) {
+	public boolean matches(Object feature, Range<Integer> row) {
 		return super.matches(feature, row) || (feature instanceof Integer && row.inRange((Integer) feature));
 	}
 }

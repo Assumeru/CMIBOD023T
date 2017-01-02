@@ -1,4 +1,4 @@
-package hro.cmibod023t.bayes.continuous;
+package hro.cmibod023t.classification.continuous;
 
 public interface Range<T extends Number> {
 	boolean inRange(T value);

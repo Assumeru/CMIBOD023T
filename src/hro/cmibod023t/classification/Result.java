@@ -1,4 +1,4 @@
-package hro.cmibod023t.bayes;
+package hro.cmibod023t.classification;
 
 public class Result<T> {
 	private final T value;

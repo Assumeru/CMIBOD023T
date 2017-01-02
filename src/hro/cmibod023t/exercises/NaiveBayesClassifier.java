@@ -1,8 +1,8 @@
 package hro.cmibod023t.exercises;
 
-import hro.cmibod023t.bayes.NaiveClassifier;
-import hro.cmibod023t.bayes.Result;
-import hro.cmibod023t.bayes.continuous.Range;
+import hro.cmibod023t.classification.NaiveClassifier;
+import hro.cmibod023t.classification.Result;
+import hro.cmibod023t.classification.continuous.Range;
 
 public class NaiveBayesClassifier {
 	public static void main(String[] args) {
