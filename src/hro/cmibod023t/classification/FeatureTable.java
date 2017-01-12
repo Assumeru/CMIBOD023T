@@ -109,13 +109,13 @@ public class FeatureTable<T> implements Trainable<T> {
 		return -entropy;
 	}
 
-	private double getEntropy(Iterable<Integer> indices) {
+	private double getEntropy(Collection<Integer> indices) {
 		IntCountMap<T> count = new IntCountMap<>();
 		for(Integer i : indices) {
 			count.increment(results.get(i));
 		}
 		double entropy = 0;
-		double total = count.values().size();
+		double total = indices.size();
 		for(Integer i : count.values()) {
 			if(i > 0) {
 				double probability = i / total;
@@ -148,5 +148,14 @@ public class FeatureTable<T> implements Trainable<T> {
 			}
 		}
 		return split;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("<FeatureTable ").append(results);
+		for(Column<?> c : columns) {
+			sb.append('\n').append(c);
+		}
+		return sb.append('>').toString();
 	}
 }

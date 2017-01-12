@@ -17,7 +17,9 @@ public interface Column<T> {
 	boolean matches(Object external, T internal);
 
 	static Column<?> create(Class<?> type, int index) {
-		if(type == boolean.class || type == Boolean.class) {
+		if(type == String.class) {
+			return new StringColumn(index);
+		} else if(type == boolean.class || type == Boolean.class) {
 			return new BooleanColumn(index);
 		} else if(type == int.class || type == Integer.class) {
 			return new IntColumn(index);
