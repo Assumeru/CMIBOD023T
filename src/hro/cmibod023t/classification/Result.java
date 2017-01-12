@@ -9,6 +9,10 @@ public class Result<T> {
 		this.probability = probability;
 	}
 
+	public T getValue() {
+		return value;
+	}
+
 	@Override
 	public String toString() {
 		return value + " " + probability;
