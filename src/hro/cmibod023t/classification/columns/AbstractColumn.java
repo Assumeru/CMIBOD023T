@@ -70,4 +70,9 @@ public abstract class AbstractColumn<T> implements Column<T> {
 	public int getIndex() {
 		return index;
 	}
+
+	@Override
+	public String toString() {
+		return "<Column[" + type + ", " + index + "] " + features + ">";
+	}
 }

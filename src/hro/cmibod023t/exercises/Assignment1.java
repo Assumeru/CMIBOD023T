@@ -11,13 +11,20 @@ import java.util.Set;
 import hro.cmibod023t.classification.Result;
 
 public class Assignment1 {
-	private static final long SEED = 0;
+	private static final long SEED = System.nanoTime();
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		File file = new File(args[0]);
 		List<Mushroom> mushrooms = new MushroomParser(file).parseMushrooms();
 		Set<Mushroom> subset = subset(mushrooms);
-		Mushroom.Classifier classifier = Mushroom.createClassifier();
+		System.out.println("Subset size: " + subset.size());
+		//testClassifier(subset, mushrooms, Mushroom.createNaiveBayesianClassifier());
+		Mushroom.Classifier tree = Mushroom.createDecisionTree();
+		testClassifier(subset, mushrooms, tree);
+		System.out.println(tree);
+	}
+
+	private static void testClassifier(Set<Mushroom> subset, List<Mushroom> mushrooms, Mushroom.Classifier classifier) {
 		for(Mushroom mushroom : subset) {
 			classifier.train(mushroom);
 		}

@@ -1,5 +1,6 @@
 package hro.cmibod023t.exercises;
 
+import hro.cmibod023t.classification.DecisionTree;
 import hro.cmibod023t.classification.NaiveClassifier;
 import hro.cmibod023t.classification.Result;
 
@@ -360,34 +361,46 @@ public class Mushroom {
 		}
 	}
 
-	public static Classifier createClassifier() {
-		return new Classifier();
+	public static Classifier createNaiveBayesianClassifier() {
+		return new NBClassifier();
 	}
 
-	public static class Classifier extends NaiveClassifier<Mushroom.Class> {
-		public Classifier() {
-			super(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
+	public static Classifier createDecisionTree() {
+		return new TreeClassifier();
+	}
+
+	public interface Classifier extends hro.cmibod023t.classification.Classifier<Mushroom.Class> {
+		public default Result<Class> test(Mushroom mushroom) {
+			return test(getFeatures(mushroom));
 		}
 
-		public Result<Class> test(Mushroom mushroom) {
-			return super.test(getFeatures(mushroom));
-		}
-
-		public Classifier train(Mushroom mushroom) {
-			super.train(mushroom.getType(), getFeatures(mushroom));
+		public default Classifier train(Mushroom mushroom) {
+			train(mushroom.getType(), getFeatures(mushroom));
 			return this;
 		}
+	}
 
-		private Object[] getFeatures(Mushroom mushroom) {
-			return new Object[] {
-					mushroom.getCapShape(), mushroom.getCapSurface(), mushroom.getCapColor(),
-					mushroom.isBruised(), mushroom.getOdor(), mushroom.getGillAttachment(),
-					mushroom.getGillSpacing(), mushroom.getGillSize(), mushroom.getGillColor(),
-					mushroom.getStalkShape(), mushroom.getStalkRoot(), mushroom.getStalkSurfaceAboveRing(),
-					mushroom.getStalkSurfaceBelowRing(), mushroom.getStalkColorAboveRing(), mushroom.getStalkColorBelowRing(),
-					mushroom.getVeilType(), mushroom.getVeilColor(), mushroom.getRingNumber(),
-					mushroom.getRingType(), mushroom.getSporePrintColor(), mushroom.getPopulation(), mushroom.getHabitat()
-			};
+	private static Object[] getFeatures(Mushroom mushroom) {
+		return new Object[] {
+				mushroom.getCapShape(), mushroom.getCapSurface(), mushroom.getCapColor(),
+				mushroom.isBruised(), mushroom.getOdor(), mushroom.getGillAttachment(),
+				mushroom.getGillSpacing(), mushroom.getGillSize(), mushroom.getGillColor(),
+				mushroom.getStalkShape(), mushroom.getStalkRoot(), mushroom.getStalkSurfaceAboveRing(),
+				mushroom.getStalkSurfaceBelowRing(), mushroom.getStalkColorAboveRing(), mushroom.getStalkColorBelowRing(),
+				mushroom.getVeilType(), mushroom.getVeilColor(), mushroom.getRingNumber(),
+				mushroom.getRingType(), mushroom.getSporePrintColor(), mushroom.getPopulation(), mushroom.getHabitat()
+		};
+	}
+
+	public static class NBClassifier extends NaiveClassifier<Mushroom.Class> implements Classifier {
+		public NBClassifier() {
+			super(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
+		}
+	}
+
+	public static class TreeClassifier extends DecisionTree<Mushroom.Class> implements Classifier {
+		public TreeClassifier() {
+			super(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
 		}
 	}
 }
