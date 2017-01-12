@@ -1,6 +1,6 @@
 package hro.cmibod023t.cluster.points;
 
-public class EuclidianDoublePoint extends AbstractPoint<EuclidianDoublePoint> {
+public class EuclidianDoublePoint extends AbstractPoint<EuclidianDoublePoint> implements KDPoint {
 	protected final double[] dimensions;
 
 	public EuclidianDoublePoint(double... dimensions) {
@@ -18,5 +18,15 @@ public class EuclidianDoublePoint extends AbstractPoint<EuclidianDoublePoint> {
 			sum += delta * delta;
 		}
 		return sum;
+	}
+
+	@Override
+	public int getDimensions() {
+		return dimensions.length;
+	}
+
+	@Override
+	public double getDimension(int dimension) {
+		return dimensions[dimension];
 	}
 }

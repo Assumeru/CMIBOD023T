@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import hro.cmibod023t.cluster.Cluster;
+import hro.cmibod023t.cluster.KDPointCollection;
 import hro.cmibod023t.cluster.dbscan.Dbscan;
 
 public class Assignment2 {
@@ -17,7 +18,7 @@ public class Assignment2 {
 	public static void main(String[] args) throws IOException {
 		File file = new File(args[0]);
 		List<Star> stars = parseStars(file);
-		Dbscan<Star> dbscan = new Dbscan<>(EPSILON, MIN_POINTS);
+		Dbscan<Star> dbscan = new Dbscan<>(MIN_POINTS, new KDPointCollection<>(EPSILON));
 		dbscan.addPoints(stars);
 		Collection<Cluster<Star>> clusters = dbscan.cluster();
 		System.out.println("Clusters: " + clusters.size());
