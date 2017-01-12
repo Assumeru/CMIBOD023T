@@ -11,7 +11,7 @@ import java.util.Set;
 import hro.cmibod023t.classification.Result;
 
 public class Assignment1 {
-	private static final long SEED = 0;
+	private static final long SEED = 1;
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		File file = new File(args[0]);
@@ -38,13 +38,13 @@ public class Assignment1 {
 		System.out.println("Accuracy: " + (correct / mushrooms.size()));
 	}
 
-	private static Set<Mushroom> subset(List<Mushroom> mushrooms) {
+	private static <E> Set<E> subset(List<E> mushrooms) {
 		int size = mushrooms.size() / 3;
-		Set<Mushroom> subset = new HashSet<>(size);
+		Set<E> subset = new HashSet<>(size);
 		Random random = new Random(SEED);
 		for(int i = 0; i < size; i++) {
 			int index = random.nextInt(mushrooms.size());
-			Mushroom mushroom = mushrooms.get(index);
+			E mushroom = mushrooms.get(index);
 			while(subset.contains(mushroom)) {
 				index = (index + 1) % mushrooms.size();
 				mushroom = mushrooms.get(index);
@@ -52,5 +52,8 @@ public class Assignment1 {
 			subset.add(mushroom);
 		}
 		return subset;
+	}
+
+	private Assignment1() {
 	}
 }
