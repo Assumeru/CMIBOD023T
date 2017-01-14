@@ -9,7 +9,7 @@ public class NaiveClassifier<T> implements Classifier<T> {
 	private final FeatureTable<T> table;
 
 	public NaiveClassifier(Class<?>... columns) {
-		table = new FeatureTable<>(columns);
+		table = new CachingFeatureTable<>(columns);
 	}
 
 	@Override

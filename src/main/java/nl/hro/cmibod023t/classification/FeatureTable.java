@@ -64,12 +64,17 @@ public class FeatureTable<T> implements Trainable<T> {
 	}
 
 	public Map<T, Integer> countResults(Iterable<Integer> indices) {
+		IntCountMap<T> count = buildResultCounter();
+		for(Integer i : indices) {
+			count.increment(results.get(i));
+		}
+		return count;
+	}
+
+	protected IntCountMap<T> buildResultCounter() {
 		IntCountMap<T> count = new IntCountMap<>();
 		for(T result : results) {
 			count.add(result, 0);
-		}
-		for(Integer i : indices) {
-			count.increment(results.get(i));
 		}
 		return count;
 	}
