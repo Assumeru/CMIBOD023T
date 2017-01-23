@@ -14,11 +14,17 @@ public class Assignment1 {
 	private static final long SEED = 1;
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		if(args.length == 0) {
+			System.err.println("Missing file path argument");
+			System.exit(1);
+		}
 		File file = new File(args[0]);
 		List<Mushroom> mushrooms = new MushroomParser(file).parseMushrooms();
 		Set<Mushroom> subset = subset(mushrooms);
 		System.out.println("Subset size: " + subset.size());
+		System.out.println("Naive Bayesian Classifier");
 		testClassifier(subset, mushrooms, Mushroom.createNaiveBayesianClassifier());
+		System.out.println("Decision Tree Classifier");
 		Mushroom.Classifier tree = Mushroom.createDecisionTree();
 		testClassifier(subset, mushrooms, tree);
 		System.out.println(tree);

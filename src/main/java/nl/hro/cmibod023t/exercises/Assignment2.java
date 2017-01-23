@@ -28,6 +28,10 @@ public class Assignment2 {
 	private static final int MIN_POINTS = 10;
 
 	public static void main(String[] args) throws Exception {
+		if(args.length == 0) {
+			System.err.println("Missing file path argument");
+			System.exit(1);
+		}
 		File file = new File(args[0]);
 		List<Star> stars = parseStars(file);
 		Dbscan<Star> dbscan = new Dbscan<>(MIN_POINTS, new KDPointCollection<>(EPSILON));
