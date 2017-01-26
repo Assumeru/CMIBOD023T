@@ -44,7 +44,7 @@ public class Assignment1 {
 		System.out.println("Accuracy: " + (correct / mushrooms.size()));
 	}
 
-	private static <E> Set<E> subset(List<E> mushrooms) {
+	public static <E> Set<E> subset(List<E> mushrooms) {
 		int size = mushrooms.size() / 3;
 		Set<E> subset = new HashSet<>(size);
 		Random random = new Random(SEED);

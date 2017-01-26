@@ -20,25 +20,16 @@ public interface Node<T> {
 			return new ValueNode<>(results.keySet().iterator().next(), 1);
 		}
 		Column<?> column;
-		if(table.columns().size() == 1) {
+		if(table.columns().isEmpty()) {
+			return getLeaf(results);
+		} else if(table.columns().size() == 1) {
 			column = table.getColumn(0);
 		} else {
 			column = table.getColumnWithLargestGain();
 		}
 		Set<Object> features = column.getFeatures();
 		if(features.size() == 1) {
-			int max = Integer.MIN_VALUE;
-			T result = null;
-			double total = 0;
-			for(Entry<T, Integer> entry : results.entrySet()) {
-				int value = entry.getValue();
-				total += value;
-				if(value > max) {
-					max = value;
-					result = entry.getKey();
-				}
-			}
-			return new ValueNode<>(result, max / total);
+			return getLeaf(results);
 		}
 		Map<Object, Node<T>> children = new HashMap<>();
 		for(Object feature : features) {
@@ -46,5 +37,20 @@ public interface Node<T> {
 			children.put(feature, child);
 		}
 		return new BranchNode<>(children, column);
+	}
+
+	static <T> Node<T> getLeaf(Map<T, Integer> results) {
+		int max = Integer.MIN_VALUE;
+		T result = null;
+		double total = 0;
+		for(Entry<T, Integer> entry : results.entrySet()) {
+			int value = entry.getValue();
+			total += value;
+			if(value > max) {
+				max = value;
+				result = entry.getKey();
+			}
+		}
+		return new ValueNode<>(result, max / total);
 	}
 }
