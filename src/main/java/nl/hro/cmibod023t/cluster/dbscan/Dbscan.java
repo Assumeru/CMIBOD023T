@@ -59,7 +59,11 @@ public class Dbscan<E extends Point> {
 				visited.add(p);
 				Collection<E> n = this.points.getNeighbours(p);
 				if(n.size() >= minPoints) {
-					points.addAll(n);
+					for(E neighbour : n) {
+						if(neighbour.getCluster() == null || !visited.contains(neighbour)) {
+							points.add(neighbour);
+						}
+					}
 				}
 			}
 			if(p.getCluster() == null) {
