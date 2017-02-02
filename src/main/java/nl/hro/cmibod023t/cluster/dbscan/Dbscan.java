@@ -11,6 +11,7 @@ import nl.hro.cmibod023t.cluster.Cluster;
 import nl.hro.cmibod023t.cluster.DefaultPointCollection;
 import nl.hro.cmibod023t.cluster.PointCollection;
 import nl.hro.cmibod023t.cluster.points.Point;
+import nl.hro.cmibod023t.collection.SetList;
 
 public class Dbscan<E extends Point> {
 	private final int minPoints;
@@ -52,7 +53,7 @@ public class Dbscan<E extends Point> {
 
 	private Cluster<E> createCluster(Collection<E> neighbours, Set<E> visited) {
 		Cluster<E> c = new Cluster<>();
-		List<E> points = new ArrayList<>(neighbours);
+		List<E> points = new SetList<>(neighbours);
 		for(int i = 0; i < points.size(); i++) {
 			E p = points.get(i);
 			if(!visited.contains(p)) {

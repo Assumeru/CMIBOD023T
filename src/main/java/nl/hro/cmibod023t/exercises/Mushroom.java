@@ -1,10 +1,11 @@
 package nl.hro.cmibod023t.exercises;
 
+import nl.hro.cmibod023t.classification.Classifier;
 import nl.hro.cmibod023t.classification.DecisionTree;
 import nl.hro.cmibod023t.classification.NaiveClassifier;
-import nl.hro.cmibod023t.classification.Result;
+import nl.hro.cmibod023t.classification.Testable;
 
-public class Mushroom {
+public class Mushroom implements Testable<Mushroom.Class> {
 	private final Class type;
 	private final CapShape capShape;
 	private final Surface capSurface;
@@ -361,46 +362,29 @@ public class Mushroom {
 		}
 	}
 
-	public static Classifier createNaiveBayesianClassifier() {
-		return new NBClassifier();
+	public static Classifier<Mushroom.Class> createNaiveBayesianClassifier() {
+		return new NaiveClassifier<>(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
 	}
 
-	public static Classifier createDecisionTree() {
-		return new TreeClassifier();
+	public static Classifier<Mushroom.Class> createDecisionTree() {
+		return new DecisionTree<>(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
 	}
 
-	public interface Classifier extends nl.hro.cmibod023t.classification.Classifier<Mushroom.Class> {
-		public default Result<Class> test(Mushroom mushroom) {
-			return test(getFeatures(mushroom));
-		}
-
-		public default Classifier train(Mushroom mushroom) {
-			train(mushroom.getType(), getFeatures(mushroom));
-			return this;
-		}
-	}
-
-	private static Object[] getFeatures(Mushroom mushroom) {
+	@Override
+	public Object[] getFeatures() {
 		return new Object[] {
-				mushroom.getCapShape(), mushroom.getCapSurface(), mushroom.getCapColor(),
-				mushroom.isBruised(), mushroom.getOdor(), mushroom.getGillAttachment(),
-				mushroom.getGillSpacing(), mushroom.getGillSize(), mushroom.getGillColor(),
-				mushroom.getStalkShape(), mushroom.getStalkRoot(), mushroom.getStalkSurfaceAboveRing(),
-				mushroom.getStalkSurfaceBelowRing(), mushroom.getStalkColorAboveRing(), mushroom.getStalkColorBelowRing(),
-				mushroom.getVeilType(), mushroom.getVeilColor(), mushroom.getRingNumber(),
-				mushroom.getRingType(), mushroom.getSporePrintColor(), mushroom.getPopulation(), mushroom.getHabitat()
+				getCapShape(), getCapSurface(), getCapColor(),
+				isBruised(), getOdor(), getGillAttachment(),
+				getGillSpacing(), getGillSize(), getGillColor(),
+				getStalkShape(), getStalkRoot(), getStalkSurfaceAboveRing(),
+				getStalkSurfaceBelowRing(), getStalkColorAboveRing(), getStalkColorBelowRing(),
+				getVeilType(), getVeilColor(), getRingNumber(),
+				getRingType(), getSporePrintColor(), getPopulation(), getHabitat()
 		};
 	}
 
-	public static class NBClassifier extends NaiveClassifier<Mushroom.Class> implements Classifier {
-		public NBClassifier() {
-			super(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
-		}
-	}
-
-	public static class TreeClassifier extends DecisionTree<Mushroom.Class> implements Classifier {
-		public TreeClassifier() {
-			super(CapShape.class, Surface.class, Color.class, boolean.class, Odor.class, GillAttachment.class, GillSpacing.class, GillSize.class, Color.class, StalkShape.class, StalkRoot.class, Surface.class, Surface.class, Color.class, Color.class, VeilType.class, Color.class, RingNumber.class, RingType.class, Color.class, Population.class, Habitat.class);
-		}
+	@Override
+	public Class getTargetClass() {
+		return type;
 	}
 }

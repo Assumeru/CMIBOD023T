@@ -24,7 +24,7 @@ import nl.hro.cmibod023t.cluster.dbscan.Dbscan;
 
 public class Assignment2 {
 	private static final long SEED = 0;
-	private static final double EPSILON = 0.1;
+	private static final double EPSILON = 0.5;
 	private static final int MIN_POINTS = 10;
 
 	public static void main(String[] args) throws Exception {

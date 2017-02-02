@@ -1,6 +1,8 @@
 package nl.hro.cmibod023t.test.adult;
 
-public class Person {
+import nl.hro.cmibod023t.classification.Testable;
+
+public class Person implements Testable<String> {
 	private final int age;
 	private final String workClass;
 	private final int fnlwgt;
@@ -92,6 +94,18 @@ public class Person {
 	}
 
 	public String getIncome() {
+		return income;
+	}
+
+	@Override
+	public Object[] getFeatures() {
+		return new Object[] {
+				getWorkClass(), getEducation(), getMaritalStatus(), getOccupation(), getRelationship(), getRace(), getSex(), getNativeCountry()
+		};
+	}
+
+	@Override
+	public String getTargetClass() {
 		return income;
 	}
 }

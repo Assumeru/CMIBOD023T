@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import nl.hro.cmibod023t.classification.Classifier;
 import nl.hro.cmibod023t.classification.Result;
 
 public class Assignment1 {
@@ -25,12 +26,12 @@ public class Assignment1 {
 		System.out.println("Naive Bayesian Classifier");
 		testClassifier(subset, mushrooms, Mushroom.createNaiveBayesianClassifier());
 		System.out.println("Decision Tree Classifier");
-		Mushroom.Classifier tree = Mushroom.createDecisionTree();
+		Classifier<Mushroom.Class> tree = Mushroom.createDecisionTree();
 		testClassifier(subset, mushrooms, tree);
 		System.out.println(tree);
 	}
 
-	private static void testClassifier(Set<Mushroom> subset, List<Mushroom> mushrooms, Mushroom.Classifier classifier) {
+	private static void testClassifier(Set<Mushroom> subset, List<Mushroom> mushrooms, Classifier<Mushroom.Class> classifier) {
 		for(Mushroom mushroom : subset) {
 			classifier.train(mushroom);
 		}

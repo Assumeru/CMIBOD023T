@@ -15,14 +15,14 @@ public class AdultTest {
 		Set<Person> subset = Assignment1.subset(people);
 		Classifier<String> classifier = new DecisionTree<>(String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
 		for(Person p : subset) {
-			classifier.train(p.getIncome(), getFeatures(p));
+			classifier.train(p);
 		}
 		double correct = 0;
 		int line = 0;
 		for(Person p : people) {
 			line++;
 			try {
-				if(p.getIncome().equals(classifier.test(getFeatures(p)).getValue())) {
+				if(p.getIncome().equals(classifier.test(p).getValue())) {
 					correct++;
 				}
 			} catch(Exception e) {
@@ -31,11 +31,5 @@ public class AdultTest {
 		}
 		System.out.println(correct / people.size());
 		//System.out.println(classifier);
-	}
-
-	private static Object[] getFeatures(Person p) {
-		return new Object[] {
-				p.getWorkClass(), p.getEducation(), p.getMaritalStatus(), p.getOccupation(), p.getRelationship(), p.getRace(), p.getSex(), p.getNativeCountry()
-		};
 	}
 }
